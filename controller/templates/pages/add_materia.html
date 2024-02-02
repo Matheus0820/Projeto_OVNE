@@ -1,0 +1,149 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Cadastrar materia
+{% endblock %}
+
+{% block controller %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger text-center" role="alert">
+  <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class=" text-center">
+  <div class="card text-start" style="margin: 1rem;">
+    <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+      <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'list_materia' %}"
+          class="btn btn-success btn-sm" title="Voltar"><i class="bi bi-arrow-left-circle"></i></a></div>
+      <div class="p-2 bd-highlight" style="width: 10rem;">Cadastrar matéria</div>
+      <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+    </div>
+    <div class="card-body">
+      <form action="{% url 'add_materia' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        {{form_texto.management_form}}
+        {{form_imagem.management_form}}
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+              role="tab" aria-controls="home" aria-selected="true">Informações Gerais</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+              role="tab" aria-controls="profile" aria-selected="false">Matéria</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button"
+              role="tab" aria-controls="contact" aria-selected="false">Imagens</button>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="mb-3">
+              <div class="row">
+                <div class="col">
+                  <label for="titulo_materia" class="form-label">Titulo da Matéria</label>
+                  {{form.titulo}}
+                  <div id="titulohelp" class="form-text">{{form.titulo.help_text}}</div>
+                </div>
+                <div class="col">
+                  <label for="titulo_materia" class="form-label">Capa da Matéria</label>
+                  {{form.capa}}
+                  <div id="titulohelp" class="form-text">{{form.titulo.help_text}}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="descricao" class="form-label">Resumo</label>
+              {{form.resumo}}
+              <div id="resumohelp" class="form-text">{{form.resumo.help_text}}</div>
+            </div>
+            <div class="mb-3">
+              <label for="autor" class="form-label">Autor da matéria</label>
+              {{form.autor}}
+              <div id="autorhelp" class="form-text">{{form.autor.help_text}}</div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            {% for form in form_texto %}
+            <div class="inlineformtexto">
+              <br>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <label for="topico" class="form-label">Nome do Tópico</label>
+                  {{form.topico}}
+                  <div id="topicohelp" class="form-text">{{form.topico.help_text}}</div>
+                  <label for="texto" class="form-label">Texto</label>
+                  {{form.texto}}
+                  <div id="textohelp" class="form-text" style="display: inline-block;">{{form.texto.help_text}}</div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+            {% for form in form_imagem %}
+            <div class="inlineformimagem">
+              <br>
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <div class="row">
+                      <div class="col">
+                        <label for="legenda" class="form-label">Legenda da Imagem</label>
+                        {{form.legenda}}
+                        <div id="legendahelp" class="form-text">{{form.legenda.help_text}}</div>
+                      </div>
+                      <div class="col">
+                        <label for="fonte" class="form-label">Fonte</label>
+                        {{form.fonte}}
+                        <div id="fontehelp" class="form-text">{{form.fonte.help_text}}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <label for="imagem" class="form-label">Imagem</label> <br>
+                  {{form.imagem}} <br>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+        <div class="mb-3">
+          <hr>
+          <button type="submit" class="btn btn-dark"><i class="bi bi-floppy"></i> Cadastrar matéria </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% block script %}
+<script type="text/javascript">
+  $(function () {
+    $('.inlineformtexto').formset({
+      prefix: '{{ form_texto.prefix }}',
+      addText: "<i class='bi bi-plus'></i> Texto",
+      deleteText: "<i class='bi bi-trash'></i>",
+      addCssClass: "btn btn-dark",
+      deleteCssClass: "btn btn-danger btn-sm",
+    });
+    $('.inlineformimagem').formset({
+      prefix: '{{ form_imagem.prefix }}',
+      addText: "<i class='bi bi-plus'></i> Imagem",
+      deleteText: "<i class='bi bi-trash'></i>",
+      addCssClass: "btn btn-dark",
+      deleteCssClass: "btn btn-danger btn-sm"
+    });
+  })
+</script>
+{% endblock %}
+
+{% endblock %}

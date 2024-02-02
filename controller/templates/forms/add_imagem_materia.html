@@ -1,0 +1,84 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Editar imagem da materia
+{% endblock %}
+
+{% block controller %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+          <div class="modal fade" id="modalAviso" tabindex="-1" aria-labelledby="modalAvisoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-success" id="modalAvisoLabel">{{ message }}</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Sua imagem foi adicionada com sucesso a matéria, por favor, clique em voltar para retorna para a
+                    página de visualização da matéria
+                  </p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                  <a href="{% url 'manage_materia' id %}" class="btn btn-sm btn-success"><i class="bi bi-arrow-return-left"></i> Voltar</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% else %}
+            <div class="alert alert-danger text-center" role="alert">
+                <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'manage_materia' id %}" class="btn btn-sm btn-danger"><i
+                        class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Adicionar imagem</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+          <form action="{% url 'add_imagem_materia' id %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label for="legenda">Legenda da Imagem</label>
+                {{form.legenda}}
+                <div id="legendahelp" class="form-text">{{form.legenda.help_text}}</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="imagem" class="form-label">Imagem</label>
+                {{form.imagem}}
+            </div>
+
+            <div class="mb-3">
+                <label for="legenda">Fonte da Imagem</label>
+                {{form.fonte}}
+                <div id="legendahelp" class="form-text">{{form.fonte.help_text}}</div>
+            </div>
+
+            <button type="submit" class="btn btn-sm btn-dark" style="margin: 1rems;"><i class="bit bi-floppy"></i>
+                Adicionar</button>
+
+          </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modalAviso').modal('show');
+    });
+</script>
+{% endblock %}

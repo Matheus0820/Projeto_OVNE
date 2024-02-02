@@ -1,0 +1,61 @@
+{% extends 'base-controller.html' %}
+
+{% block controller %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+    <i class="bi bi-person-slash"></i> {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class=" text-center">
+    <div class="card" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'profile' %}" class="btn btn-sm btn-danger"><i class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Alterar Senha</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body row justify-content-md-center">
+            <div class="card mb-3" style="max-width: 50%;">
+                <div class="row g-0">
+                    <div class="card-body text-center">
+                        <form action="{% url 'alterar_senha' %}" method="POST">
+                            {% csrf_token %}
+
+                            <h5 class="card-title">Alterar senha</h5>
+                            <div class="mb-3 row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <label for="new_password">Nova senha</label>
+                                    <div class="col align-self-center">
+                                        <input type="password" name="new_password" autocomplete="new-password"
+                                            class="form-control" id="id_new_password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 row justify-content-md-center">
+                                <div class="col-md-auto">
+                                    <label for="confirm_password">Confirmar senha</label>
+                                    <div class="col align-self-center">
+                                        <input type="password" name="confirm_password" autocomplete="new-password"
+                                            class="form-control" id="id_confirm_password">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-sm btn-dark"><i class="bi bi-check-circle"></i>
+                                Confirmar alteração</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Editar imagem da materia
+{% endblock %}
+
+{% block controller %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger text-center" role="alert">
+    <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'manage_materia' id %}" class="btn btn-sm btn-danger"><i
+                        class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Adicionar Texto</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'edit_materia' id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="titulo_materia" class="form-label">Titulo da Matéria</label>
+                    {{form.titulo}}
+                    <div id="titulohelp" class="form-text">{{form.titulo.help_text}}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="titulo_materia" class="form-label">Capa da Matéria</label>
+                    {% if form.instance.capa.name %}
+                    <p>
+                    <p>
+                        Atual:
+                        <span class="badge badge-dark bg-dark">{{ form.instance.capa.name }}</span> -
+
+                        <button type="button" class="btn btn-sm btn-dark" title="Visualizar capa"
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            <i class="bi bi-card-image"></i>
+                        </button>
+
+                        <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="card">
+                                        <img src="{{ form.instance.capa.url }}" alt="{{ form.instance.titulo }}"
+                                            style="margin: 2rem;">
+                                    </div>
+                                </div>
+                                <div class="modal-footer d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fechar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </p>
+                    </p>
+                    {% endif %}
+                    {{form.capa}}
+                    <div id="titulohelp" class="form-text">{{form.titulo.help_text}}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Resumo</label>
+                    {{form.resumo}}
+                    <div id="resumohelp" class="form-text">{{form.resumo.help_text}}</div>
+                </div>
+                <div class="mb-3">
+                    <label for="autor" class="form-label">Autor da matéria</label>
+                    {{form.autor}}
+                    <div id="autorhelp" class="form-text">{{form.autor.help_text}}</div>
+                </div>
+
+                <div class="mb-3">
+                    <hr>
+                </div>
+                <button type="submit" class="btn btn-dark"><i class="bi bi-floppy"></i> Salvar alterações </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#modalAviso').modal('show');
+    });
+</script>
+{% endblock %}

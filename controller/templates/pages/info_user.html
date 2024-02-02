@@ -1,0 +1,74 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Editar imagem da materia
+{% endblock %}
+
+{% block controller %}
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'list_users' %}" class="btn btn-sm btn-danger"><i
+                        class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Sobre o usuário</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-4 d-flex justify-content-center">
+                        <div class="text-center" style="margin: 1rem;">
+                            <i class="bi bi-person rounded" style="font-size: 10rem;"></i>
+                            <p><strong>{{usuario.first_name}}</strong></p>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Informações do usuário</h5>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Nome</h6>
+                                        <p>{{usuario.first_name}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <h6>Usuário</h6>
+                                        <p>{{usuario.username}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Email</h6>
+                                        <p>{{usuario.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6>Último login</h6>
+                                        <p>{{usuario.last_login | date:'d/m/Y - H:i' }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <h6>Data e hora de criação</h6>
+                                        <p>{{usuario.date_joined | date:'d/m/Y - H:i' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

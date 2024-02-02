@@ -1,0 +1,48 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %} 
+ Cadastrar novo vídeo
+{% endblock %}
+
+{% block controller %}
+{% if messages %}
+        {% for message in messages %}
+			<div class="alert alert-danger text-center" role="alert">
+				<strong>  <i class="bi bi-clipboard-x"></i>  </strong> {{ message }}
+			</div>
+        {% endfor %}
+{% endif %}
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+      <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+        <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'controller' %}" class="btn btn-success btn-sm" title="Voltar" ><i class="bi bi-arrow-left-circle"></i></a></div>
+        <div class="p-2 bd-highlight" style="width: 8rem;">Cadastrar video</div>
+        <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+      </div>
+        <div class="card-body">
+          <form action="{% url 'add_video' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+              <div class="mb-3">
+                <label for="titulo" class="form-label">Titulo do Vídeo</label> <br>
+                {{form.titulo}}
+                <div id="titulohelp" class="form-text">{{form.titulo.help_text}}</div> 
+              </div>
+              <div class="mb-3">
+                <label for="titulo" class="form-label">Capa do Vídeo</label> <br>
+                {{form.capa}}
+              </div>
+              <div class="mb-3">
+                <label for="url_video" class="form-label">URL do Vídeo</label> <br>
+                {{form.url}}
+                <div id="titulohelp" class="form-text">{{form.url.help_text}}</div>
+              </div>
+              <div class="mb-3">
+                <label for="url_video" class="form-label">Descrição</label> <br>
+                {{form.descricao}}
+                <div id="titulohelp" class="form-text">{{form.descricao.help_text}}</div>
+              </div>
+              <button type="submit" class="btn btn-dark"><i class="bi bi-floppy"></i> Cadastrar vídeo </button>
+          </form>
+      </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Lista de vídeos
+{% endblock %}
+
+{% block controller %}
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success text-center" role="alert">
+  <strong> <i class="bi bi-check-circle"></i> </strong> {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class="text-center">
+  <div class="card text-start" style="margin: 1rem;">
+    <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+      <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'controller' %}" class="btn btn-success btn-sm"
+          title="Voltar"><i class="bi bi-arrow-left-circle"></i></a></div>
+      <div class="p-2 bd-highlight" style="width: 8rem;">Lista de vídeos</div>
+      <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'add_video' %}" type="submit"
+          class="btn btn-danger btn-sm"><i class="bi bi-plus-circle"> </i> Adicionar</i></a></div>
+    </div>
+    <div class="card-body">
+      <div class="card-header">
+        <form method="GET" action="{% url 'list_video' %}" class="input-group">
+          <input type="text" name="search" class="form-control" placeholder="Pesquisar" aria-label="Pesquisar"
+            value="{{request.GET.search}}">
+          {% if request.GET.search %}
+          <a class="btn btn-outline-danger" href="{% url 'list_video' %}"><i class="bi bi-x-lg"></i></a>
+          {% endif %}
+          <button class="btn btn-outline-success" type="submit" style="margin-right: 5px;"><i
+              class="bi bi-search"></i></button>
+
+          <div class="btn-group">
+            <button type="button" class="btn btn-success" disabled>Filtrar</button>
+            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <span class="visually-hidden">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+              {% if request.GET.filtro %}
+              {% if request.GET.filtro == "Recentes" %}
+              <li><input type="submit" name="filtro" class="dropdown-item active" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "Antigos" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item active" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "A-Z" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item active" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "Z-A" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item active" value="Z-A"></li>
+              {% endif %}
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="{% url 'list_video' %}">Limpar Filtro</a></li>
+              {% elif request.GET.search %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% else %}
+              <li><input type="submit" name="filtro" class="dropdown-item active" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% endif %}
+
+            </ul>
+          </div>
+        </form>
+      </div>
+      <table class="table table-bordered table-responsive">
+        <thead class="thead-dark">
+          {% if pagina %}
+          <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">Titulo</th>
+            <th scope="col" class="text-center">Data de publicação</th>
+            <th scope="col" class="text-center" style="width: 8rem;">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for video in pagina.object_list %}
+          <tr>
+            <th scope="row" class="text-center" vAlign="middle">{{pagina.start_index|add:forloop.counter0}}</th>
+            <td class="text-center" vAlign="middle">{{video.titulo}}</td>
+            <td class="text-center" vAlign="middle">{{video.publicacao|date:"d/m/Y - H:s"}}</td>
+            <td class="text-center">
+              <a href="{% url 'edit_video' video.id %}" type="submit" class="btn btn-warning btn-sm" title="Editar"><i
+                  class="bi bi-pencil"></i></a>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                data-bs-target="#modalDelete{{video.id}}" title="Excluir">
+                <i class="bi bi-trash"></i>
+              </button>
+
+              <!-- MODAL -->
+              <div class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+                id="modalDelete{{video.id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">AVISO!</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-danger">Quer mesmo deletar esse vídeo?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                      <a href="{% url 'delete_video' video.id %}" type="button" class="btn btn-danger"
+                        title="Excluir">Sim</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- FIM MODAL -->
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <th scope="row" class="text-center text-danger">Nenhum vídeo Cadastrado</th>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          {% if pagina.has_previous %}
+          {% if request.GET.search %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.previous_page_number}}&search={{request.GET.search}}"
+              title="Anterior"><i class="bi bi-chevron-double-left"></i></a>
+          </li>
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.previous_page_number}}&search={{request.GET.search}}">{{pagina.previous_page_number}}</a>
+          </li>
+          {% elif request.GET.filtro %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.previous_page_number}}&filtro={{request.GET.filtro}}"
+              title="Anterior"><i class="bi bi-chevron-double-left"></i></a>
+          </li>
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.previous_page_number}}&filtro={{request.GET.filtro}}">{{pagina.previous_page_number}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{% url 'list_video' %}?page={{pagina.previous_page_number}}" title="Anterior"><i
+                class="bi bi-chevron-double-left"></i></a>
+          </li>
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.previous_page_number}}">{{pagina.previous_page_number}}</a>
+          </li>
+          {% endif %}
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true" title="Anterior"><i
+                class="bi bi-chevron-double-left"></i></a>
+          </li>
+          {% endif %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">{{pagina.number}}</a>
+          </li>
+          {% if pagina.has_next %}
+          {% if request.GET.search %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.next_page_number}}&search={{request.GET.search}}">{{pagina.next_page_number}}</a>
+          </li>
+          {% if pagina.next_page_number != pagina.paginator.num_pages %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.paginator.num_pages}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}" title="Última página"><i
+                class="bi bi-three-dots"></i></a></li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.next_page_number}}&search={{request.GET.search}}"
+              title="Próximo"><i class="bi bi-chevron-double-right"></i></a>
+          </li>
+          {% elif request.GET.filtro %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.next_page_number}}&filtro={{request.GET.filtro}}">{{pagina.next_page_number}}</a>
+          </li>
+          {% if pagina.next_page_number != pagina.paginator.num_pages %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.paginator.num_pages}}&filtro={{request.GET.filtro}}" title="Última página"><i
+                class="bi bi-three-dots"></i></a></li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.next_page_number}}&filtro={{request.GET.filtro}}"
+              title="Próximo"><i class="bi bi-chevron-double-right"></i></a>
+          </li>
+          {% else %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.next_page_number}}">{{pagina.next_page_number}}</a></li>
+          {% if pagina.next_page_number != pagina.paginator.num_pages %}
+          <li class="page-item"><a class="page-link"
+              href="{% url 'list_video' %}?page={{pagina.paginator.num_pages}}" title="Última página"><i class="bi bi-three-dots"></i></a>
+          </li>
+          {% endif %}
+          <li class="page-item">
+            <a class="page-link" href="{% url 'list_video' %}?page={{pagina.next_page_number}}" title="Próximo"><i
+                class="bi bi-chevron-double-right"></i></a>
+          </li>
+          {% endif %}
+          {% else %}
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true" title="Próximo"><i
+                class="bi bi-chevron-double-right"></i></a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+{% endblock %}

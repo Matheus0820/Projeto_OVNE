@@ -1,0 +1,63 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Editar texto da materia
+{% endblock %}
+
+{% block controller %}
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success text-center" role="alert">
+                <strong> <i class="bi bi-check-circle"></i> </strong> {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-danger text-center" role="alert">
+                <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'manage_materia' materia %}" class="btn btn-sm btn-success"><i
+                        class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Editar texto</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form action="{% url 'edit_texto_materia' id %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input type="hidden" name="materia" value="{{materia}}">
+
+                        <label for="legenda">Tópico do Texto</label>
+                        {{form.topico}}
+                        <div id="legendahelp" class="form-text">{{form.topico.help_text}}</div>
+
+                        
+
+                        <div class="mb-3">
+                            <label for="fonte" class="form-label">Texto</label>
+                            {{form.texto}}
+                            <div id="fontehelp" class="form-text">{{form.texto.help_text}}</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-sm btn-dark"><i class="bi bi-floppy"></i> Salvar alterações
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

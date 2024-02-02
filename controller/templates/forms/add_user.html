@@ -1,0 +1,62 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Cadastrar novo vídeo
+{% endblock %}
+
+{% block controller %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'controller' %}"
+                    class="btn btn-success btn-sm" title="Voltar"><i class="bi bi-arrow-left-circle"></i></a></div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Criando Usuário</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+            <form action="{% url 'add_user' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col">
+                            <label for="username" class="form-label">User</label> <br>
+                            {{form.username}}
+                        </div>
+                        <div class="col">
+                            <label for="nome" class="form-label">Nome do usuário</label> <br>
+                            {{form.first_name}}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email">Email</label>
+                    {{form.email}}
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col">
+                            <label for="password1">Senha</label><br>
+                            <input type="password" name="password1" autocomplete="new-password" class="form-control" id="id_password1">
+                        </div>
+                        
+                        <div class="col">
+                            <label for="password2">Confirmar senha</label><br>
+                            <input type="password" name="password2" autocomplete="new-password" class="form-control" id="id_password2">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <hr>
+                    <button type="submit" class="btn btn-sm btn-dark"><i class="bi bi-person-add"></i> Adicionar Usuário</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
