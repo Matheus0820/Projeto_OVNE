@@ -1,0 +1,68 @@
+{% extends 'base-observatorio.html' %}
+{% block listnavbar %}
+<li><a href="{% url 'home' %}">Home</a></li>
+<li><a href="{% url 'videos' %}">Videos</a></li>
+<li><a href="{% url 'noticias' %}">Noticias</a></li>
+<li><a href="{% url 'sobre' %}">About us</a></li>
+{% endblock %}
+
+{% block observatorio %}
+<div style="margin-top: 75px; margin-bottom: 10px;">
+    <article style="margin: 1rem; ">
+        <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+            <img src="{{materia.capa.url}}" alt="{{materia.titulo}}" style="max-width: 400px;">
+        </div>
+        <h2>{{materia.titulo}}</h2>
+        <p><small class="text-dark"><strong>Autor: {{materia.autor}}</strong> - Puclicado em:
+                {{materia.publicacao|date:"d/m/Y"}}</small></p>
+        <div style="margin: 1rem;">
+            <h3>Resumo</h3>
+            <div style="margin: 1rem;">
+                <p class="text-dark">{{materia.resumo | safe | linebreaksbr }}</p>
+            </div>
+            {% for texto in textos %}
+            <h3>{{texto.topico}}</h3>
+            <div style="margin: 1rem;">
+                <p class="text-dark">{{texto.texto | safe | linebreaksbr }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+    {% if imagens %}
+    <div class="uk-position-relative uk-visible-toggle uk-dark" tabindex="-1" uk-slideshow="autoplay: true"
+        style="max-width: 700px; max-height: 700px; left: 50%; transform: translate(-50%);">
+        <h3>Imagens</h3>
+        <ul class="uk-slideshow-items">
+            {% for imagem in imagens %}
+            <li>
+                <img src="{{imagem.imagem.url}}" alt="" uk-cover>
+                <div class="uk-position-bottom uk-position-medium uk-text-center uk-light"
+                    style="background-color: rgba(0, 0, 0, 0.7); border-radius: 5px;">
+
+                    <h6 style="margin: 1rem;" class="">{{imagem.legenda}}</h6>
+                    <p style="margin: 1rem;" class="text-white">Fonte: {{imagem.fonte}}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <ul class="uk-slideshow-nav uk-dotnav uk-flex-center uk-margin" role="tablist">
+            {% for imagem in imagens %}
+            <li uk-slideshow-item="{{ forloop.counter0 }}" role="presentation" class=""><a href="" role="tab"
+                    aria-controls="uk-slideshow-65" aria-label="Diapositivo {{ forloop.counter0 }}"
+                    aria-selected="false" tabindex="-1"></a></li>
+            {% endfor %}
+        </ul>
+
+        <a style="background-color: rgba(255, 255, 255, 0.4); border-radius: 5px; color: black;"
+            class="uk-position-center-left uk-position-small uk-hidden-hover" href uk-slidenav-previous
+            uk-slideshow-item="previous"></a>
+        <a style="background-color: rgba(255, 255, 255, 0.4); border-radius: 5px; color: black;"
+            class="uk-position-center-right uk-position-small uk-hidden-hover" href uk-slidenav-next
+            uk-slideshow-item="next"></a>
+
+    </div>
+    {% endif %}
+    <br>
+</div>
+
+{% endblock %}

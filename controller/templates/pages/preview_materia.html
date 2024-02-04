@@ -1,0 +1,92 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Pré-visualização
+{% endblock %}
+
+{% block controller %}
+<div class="text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'list_materia' %}"
+                    class="btn btn-success btn-sm" title="Voltar"><i class="bi bi-arrow-left-circle"></i></a></div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Pré-visualização</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div>
+            <article style="margin: 1rem; ">
+                <div style="width: 100%; display: flex; align-items: center; justify-content: center;">
+                    <img src="{{materia.capa.url}}" alt="{{materia.titulo}}" style="max-width: 400px;">
+                </div>
+                <h2>{{materia.titulo}}</h2>
+                <p><small class="text-dark"><strong>Autor: {{materia.autor}}</strong> - Puclicado em:
+                        {{materia.publicacao|date:"d/m/Y"}}</small></p>
+                <div style="margin: 1rem;">
+                    <h3>Resumo</h3>
+                    <div style="margin: 1rem;">
+                        <p class="text-dark">{{materia.resumo | linebreaksbr}}</p>
+                    </div>
+                    {% for texto in textos %}
+                    <h3>{{texto.topico}}</h3>
+                    <div style="margin: 1rem;">
+                        <p class="text-dark">{{texto.texto | linebreaksbr}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </article>
+            {% if imagens %}
+            <div id="carouselImagens" class="carousel slide" data-bs-ride="carousel"
+                style="max-width: 700px; max-height: 700px; left: 50%; transform: translate(-50%);">
+        
+                <div class="carousel-indicators">
+                    {% for imagem in imagens %}
+                    {% if forloop.counter0 == 0 %}
+                    <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="{{ forloop.counter0 }}"
+                        class="active" aria-current="true" aria-label="Slide 0"></button>
+                    {% else%}
+                    <button type="button" data-bs-target="#carouselImagens" data-bs-slide-to="{{ forloop.counter0 }}"
+                        aria-label="Slide {{ forloop.counter0 }}"></button>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <h3>Imagens</h3>
+                <div class="carousel-inner">
+                    {% for imagem in imagens %}
+                    {% if forloop.counter0 == 0 %}
+                    <div class="carousel-item active">
+                        <img src="{{imagem.imagem.url}}" class="d-block w-100" alt="{{imagem.legenda}}">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(0, 0, 0, 0.4); border-radius: 5px;">
+                            <h6>{{imagem.legenda}}</h6>
+                            <p class="text-white"><small>Fonte: {{imagem.fonte}}</small></p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="carousel-item">
+                        <img src="{{imagem.imagem.url}}" class="d-block w-100" alt="{{imagem.legenda}}">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(0, 0, 0, 0.4); border-radius: 5px;">
+                            <h6>{{imagem.legenda}}</h6>
+                            <p class="text-white"><small>Fonte: {{imagem.fonte}}</small></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselImagens" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"
+                        style="background-color: rgba(0, 0, 0, 0.4); border-radius: 5px;"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselImagens" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"
+                        style="background-color: rgba(0, 0, 0, 0.4); border-radius: 5px;"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            {% endif %}
+        </div>
+        <br>
+    </div>
+</div>
+{% endblock %}

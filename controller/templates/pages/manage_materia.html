@@ -1,0 +1,287 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Cadastrar nova materia
+{% endblock %}
+
+{% block controller %}
+
+{% if messages %}
+{% for message in messages %}
+{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+<div class="alert alert-success text-center" role="alert">
+  <strong> <i class="bi bi-check-circle"></i> </strong> {{ message }}
+</div>
+{% else %}
+<div class="alert alert-danger text-center" role="alert">
+  <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+<div class=" text-center">
+  <div class="card text-start" style="margin: 1rem;">
+    <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+      <div class="p-2 bd-highlight" style="width: 8rem;"><a href="{% url 'list_materia' %}"
+          class="btn btn-success btn-sm" title="Voltar"><i class="bi bi-arrow-left-circle"></i></a></div>
+      <div class="p-2 bd-highlight" style="width: 10rem;">Gerenciamento</div>
+      <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+    </div>
+    <div class="card-body">
+
+
+      <!-- Menus navbar -->
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+            role="tab" aria-controls="home" aria-selected="true">Informações Gerais</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="textos-tab" data-bs-toggle="tab" data-bs-target="#textos" type="button"
+            role="tab" aria-controls="textos" aria-selected="false">Matéria</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="imagens-tab" data-bs-toggle="tab" data-bs-target="#imagens" type="button"
+            role="tab" aria-controls="imagens" aria-selected="false">Imagens</button>
+        </li>
+      </ul>
+
+      <!-- Página dos menus -->
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+          <div class="d-flex justify-content-end" style="margin: 0.5rem;">
+            <a href="{% url 'edit_materia' id %}" class="btn btn-sm btn-dark"><i class="bi bi-pencil"></i>
+              Editar</i></a>
+          </div>
+
+
+          <div class="card mb-3">
+            <div class="row g-0">
+              <div class="col-md-4 d-flex align-items-center justify-content-center">
+                <img src="{{materia.capa.url}}" class="img-fluid rounded-start" alt="...">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <div class="row">
+                      <div class="col">
+                        <h5>Título da matéria</h5>
+                        <p>{{materia.titulo}}</p>
+                      </div>
+                      <div class="col">
+                        <h5>Autor da matéria</h5>
+                        <p>{{materia.autor}}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mb-3">
+                    <h5>Resumo</h5>
+                    <p>{{materia.resumo}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        </div>
+
+        <div class="tab-pane fade" id="textos" role="tabpanel" aria-labelledby="textos-tab">
+
+          <div class="d-flex justify-content-end" style="margin-top: 0.5rem;">
+            <a href="{% url 'add_texto_materia' id %}" class="btn btn-sm btn-dark"><i class="bi bi-plus-circle"></i>
+              Tópico</i></a>
+          </div>
+
+          {% if textos %}
+          <table class="table table-bordered text-center" style="margin-top: 0.5rem;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tópico</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for texto in textos %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ texto.topico }}</td>
+                <td style="max-width: 5rem;">
+                  <!-- Visualizar Texto -->
+                  <button type="button" class="btn btn-sm btn-dark" title="Visualizar Texto" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop{{ texto.id }}">
+                    <i class="bi bi-body-text"></i>
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="staticBackdrop{{ texto.id }}" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <div class="card">
+                            <h5>{{texto.topico}}</h5>
+                            <p>{{texto.texto}}</p>
+                          </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- FIM MODAL -->
+
+                  <!-- Editar texto -->
+                  <a href="{% url 'edit_texto_materia' texto.id %}?materia={{id}}" class="btn btn-sm btn-warning"><i
+                      class="bi bi-pencil"></i></a>
+
+                  <!-- Excluir texto -->
+                  <button type="button" class="btn btn-sm btn-danger " data-bs-toggle="modal"
+                    data-bs-target="#modalDelete{{texto.id}}" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                  </button>
+
+                  <!-- MODAL -->
+                  <div class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+                    id="modalDelete{{texto.id}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content rounded-3 shadow">
+
+                        <div class="modal-body p-4 text-center">
+                          <h5 class="mb-0">Você quer mesmo deletar essa texto?</h5>
+                          <p class="mb-0">Ao deletar o mesmo todas informações referêntes a eles
+                            não existiram mais e não poderam ser recuperadas</p>
+                        </div>
+
+                        <div class="modal-footer flex-nowrap p-0">
+                          <a href="{% url 'delete_texto_materia' id=id tx_id=texto.id %}"
+                            class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Sim,
+                              quero deletar</strong></a>
+
+                          <button type="button"
+                            class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- FIM MODAL -->
+                </td>
+
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          {% endif %}
+        </div>
+
+        <div class="tab-pane fade" id="imagens" role="tabpanel" aria-labelledby="imagens-tab">
+
+          <div class="d-flex justify-content-end" style="margin-top: 0.5rem;">
+            <a href="{% url 'add_imagem_materia' id %}" class="btn btn-sm btn-dark"><i class="bi bi-plus-circle"></i>
+              Imagem</i></a>
+          </div>
+
+          {% if imagens %}
+          <table class="table table-bordered text-center" style="margin-top: 0.5rem;">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Legenda imagem</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              {% for imagem in imagens %}
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{ imagem.legenda }}</td>
+                <td style="max-width: 5rem;">
+                  <!-- Visualizar Imagem -->
+                  <button type="button" class="btn btn-sm btn-dark" title="Visualizar Imagem" data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop{{ imagem.id }}">
+                    <i class="bi bi-card-image"></i>
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="staticBackdrop{{ imagem.id }}" data-bs-backdrop="static"
+                    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-body">
+                          <div class="card">
+                            <img src="{{ imagem.imagem.url }}" alt="{{ imagem.legenda }}" style="margin: 2rem;">
+                          </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- FIM MODAL -->
+
+                  <!-- Editar imagem -->
+                  <a href="{% url 'edit_imagem_materia' imagem.id %}?materia={{id}}" class="btn btn-sm btn-warning"><i
+                      class="bi bi-pencil"></i></a>
+
+                  <!-- Excluir Imagem -->
+                  <button type="button" class="btn btn-sm btn-danger " data-bs-toggle="modal"
+                    data-bs-target="#modalDelete{{imagem.id}}" title="Excluir">
+                    <i class="bi bi-trash"></i>
+                  </button>
+
+                  <!-- MODAL -->
+                  <div class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true"
+                    id="modalDelete{{imagem.id}}">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content rounded-3 shadow">
+
+                        <div class="modal-body p-4 text-center">
+                          <h5 class="mb-0">Você quer mesmo deletar essa imagem?</h5>
+                          <p class="mb-0">Ao deletar o mesmo todas informações referêntes a eles
+                            não existiram mais e não poderam ser recuperadas</p>
+                        </div>
+
+                        <div class="modal-footer flex-nowrap p-0">
+                          <a href="{% url 'delete_imagem_materia' id=id im_id=imagem.id %}"
+                            class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end"><strong>Sim,
+                              quero deletar</strong></a>
+
+                          <button type="button"
+                            class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- FIM MODAL -->
+                </td>
+
+              </tr>
+              {% endfor %}
+
+            </tbody>
+          </table>
+          {% endif %}
+
+        </div>
+      </div>
+      <hr>
+      <a href="{% url 'list_materia' %}" class="btn btn-sm btn-dark"><i class="bi bi-arrow-return-left"></i> Sair</a>
+    </div>
+  </div>
+
+  {% endblock %}

@@ -1,0 +1,147 @@
+{% extends 'base-observatorio.html' %}
+{% block listnavbar %}
+<li><a href="{% url 'home' %}">Home</a></li>
+<li class="active"><a href="{% url 'videos' %}">Videos</a></li>
+<li><a href="{% url 'noticias' %}">Noticias</a></li>
+<li><a href="{% url 'sobre' %}">About us</a></li>
+{% endblock %}
+
+{% block observatorio %}
+<div class="" style="margin-top: 75px;">
+  <div class="card text-start" style="margin: 1rem;">
+    <div class="card-heard" style="height: 40px;">
+      <form class="uk-position-top-right">
+        <div class="uk-search uk-search-default">
+          <button type="submit" class="uk-search-icon-flip" uk-search-icon></button>
+          <input class="uk-search-input" type="search" placeholder="Search" aria-label="Search" name="search"
+            value="{{request.GET.search}}">
+        </div>
+        <div style="display: inline-block;">
+          {% if request.GET.search %}
+          <a class="btn btn-outline-danger" href="{% url 'videos' %}" title="Limpar pesquisa"><i
+              class="bi bi-x-lg"></i></a>
+          {% endif %}
+          <button class="btn btn-outline-dark" type="button" title="Filtrar"><i class="bi bi-funnel-fill"></i></button>
+          <div uk-dropdown>
+            <ul class="uk-nav uk-dropdown-nav">
+              {% if request.GET.filtro %}
+              {% if request.GET.filtro == "Recentes" %}
+              <li class="uk-background-muted"><input type="submit" name="filtro" class="dropdown-item" value="Recentes">
+              </li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "Antigos" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li class="uk-background-muted"><input type="submit" name="filtro" class="dropdown-item" value="Antigos">
+              </li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "A-Z" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li class="uk-background-muted"><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% elif request.GET.filtro == "Z-A" %}
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Recentes"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li class="uk-background-muted"><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% endif %}
+              <li class="uk-nav-divider"></li>
+              <li><a href="{% url 'videos' %}?search={{request.GET.search}}"
+                  class="dropdown-item uk-text-emphasis">Limpar filtro</a></li>
+              {% else %}
+              <li class="uk-background-muted"><input type="submit" name="filtro" class="dropdown-item" value="Recentes">
+              </li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Antigos"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="A-Z"></li>
+              <li><input type="submit" name="filtro" class="dropdown-item" value="Z-A"></li>
+              {% endif %}
+
+            </ul>
+          </div>
+
+        </div>
+
+      </form>
+    </div>
+    <div class="card-body">
+      {% if pagina %}
+      {% for video in pagina.object_list %}
+      <div class="card mb-3">
+        <div class="row g-0">
+          <div class="card-body div-conteiner-video">
+            <a href="{% url 'play_video' video.id %}"><img src="{{video.capa.url}}" class="rounded capa-video"
+                alt="{{video.titulo}}"></a>
+            <div class="div-texto-video">
+              <a href="{% url 'play_video' video.id %}">
+                <h3 class="card-title text-dark">{{video.titulo}}</h3>
+              </a>
+              <p class="card-text text-dark">{{video.descricao|safe}}</p>
+              <p class="card-text"><small class="text-muted text-dark">Publicado em: {{video.publicacao}}</small></p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        <ul class="uk-pagination uk-flex-center" uk-margin>
+          {% if pagina.has_previous %}
+          {% if request.GET.search or request.GET.filtro %}
+          <li><a class="uk-active"
+              href="{% url 'videos' %}?page={{pagina.previous_page_number}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}"><span
+                uk-pagination-previous></span></a></li>
+          <li><a
+              href="{% url 'videos' %}?page={{pagina.previous_page_number}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}">{{pagina.previous_page_number}}</a>
+          </li>
+          {% else %}
+          <li><a class="uk-active" href="{% url 'videos' %}?page={{pagina.previous_page_number}}"><span
+                uk-pagination-previous></span></a></li>
+          <li><a href="{% url 'videos' %}?page={{pagina.previous_page_number}}">{{pagina.previous_page_number}}</a></li>
+          {% endif %}
+          {% else %}
+          <li><a class="uk-disabled"><span uk-pagination-previous></span></a></li>
+          {% endif %}
+          <li class="uk-active"><span>{{pagina.number}}</span></li>
+          {% if pagina.has_next %}
+          {% if request.GET.search or request.GET.filtro %}
+          <li><a
+              href="{% url 'videos' %}?page={{pagina.next_page_number}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}">{{pagina.next_page_number}}</a>
+          </li>
+          {% if pagina.next_page_number != pagina.paginator.num_pages %}
+          <li><a
+              href="{% url 'videos' %}?page={{pagina.paginator.num_pages}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}" title="Última página"><span
+                uk-icon="more"></span></a></li>
+          {% endif %}
+          <li><a class="uk-active"
+              href="{% url 'videos' %}?page={{pagina.next_page_number}}&search={{request.GET.search}}&filtro={{request.GET.filtro}}"><span
+                uk-pagination-next></span></a></li>
+          {% else %}
+          <li><a href="{% url 'videos' %}?page={{pagina.next_page_number}}">{{pagina.next_page_number}}</a></li>
+          {% if pagina.next_page_number != pagina.paginator.num_pages %}
+          <li><a href="{% url 'videos' %}?page={{pagina.paginator.num_pages}}" title="Última página"><span uk-icon="more"></span></a></li>
+          {% endif %}
+          <li><a class="uk-active" href="{% url 'videos' %}?page={{pagina.next_page_number}}"><span
+                uk-pagination-next></span></a></li>
+          {% endif %}
+          {% else %}
+          <li><a class="uk-disabled"><span uk-pagination-next></span></a></li>
+          {% endif %}
+        </ul>
+        {% else %}
+        {% if request.GET.search %}
+        <div class="uk-alert-danger" uk-alert>
+          <a href class="uk-alert-close" title="Fechar alerta" uk-close></a>
+          <th scope="row" class="text-center text-danger">Nenhum vídeo encontrado com os argumentos passados!</th>
+        </div>
+        {% else %}
+        <div class="uk-alert-danger" uk-alert>
+          <a href class="uk-alert-close" title="Fechar alerta" uk-close></a>
+          <th scope="row" class="text-center text-danger">Nenhum vídeo disponível no momento</th>
+        </div>
+        {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}

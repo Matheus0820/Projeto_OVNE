@@ -1,0 +1,55 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/animete_sobre.css' %}">
+
+<!-- particles.js container -->
+<div id="particles-js"></div>
+
+<div class="containert">
+    <div class="contentt">
+        <h3>Observatório de Valores do Nordeste - OVNE</h3>
+
+        <p class="text-white">Este projeto tem como objetivo destacar as potencialidades do setor Aeroespacial do
+            Nordeste brasileiro, com foco principal no Rio Grande do Norte.
+        <p class="text-white">A expectativa é que, por meio deste projeto, em colaboração com a iniciativa da 
+            <a href="https://www.instagram.com/caravanaespacial" target="_blank">Caravana Espacial</a>, seja possível
+            disseminar o conhecimento da área Aeroespacial para o Nordeste, o Brasil e o mundo, influenciando cada vez
+            mais pessoas a seguirem nessa ampla área da ciência e engenharia.</p>
+        <!-- Adicione mais conteúdo sobre a sua equipe ou organização -->
+    </div>
+</div>
+<!-- stats - count particles -->
+<div class="count-particles"> <span class="js-count-particles">--</span> particles </div>
+<!-- particles.js lib - https://github.com/VincentGarreau/particles.js -->
+<script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<!-- stats.js lib -->
+<script src="http://threejs.org/examples/js/libs/stats.min.js"></script>
+
+<script src="{% static 'js/particles_sobre.js' %}"></script>
+
+<style>
+    .containert {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        color: #fff;
+        text-align: center;
+        animation: fadeIn 2s ease-out;
+    }
+
+    .contentt {
+        padding: 20px;
+        width: 70%;
+    }
+
+    .contentt:h1 {
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+
+    .contentt:p {
+        font-size: 1.5em;
+        color: #fff;
+    }
+</style>

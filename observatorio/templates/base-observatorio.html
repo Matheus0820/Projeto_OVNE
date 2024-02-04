@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" style="height: 100%; width: 100%;">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Bootstrap Icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <!-- Icone link -->
+  <link rel="icon" href="https://static.thenounproject.com/png/302016-200.png" type="image/gif" sizes="16x16">
+
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/css/uikit.min.css" />
+
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.17.11/dist/js/uikit-icons.min.js"></script>
+
+  <title>OVNE - Observatorio</title>
+  {% load static %}
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Demo project">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+  <link href="./Avision_files/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/owl.carousel.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/owl.theme.default.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mb.YTPlayer.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main_styles.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/apresentacao-video.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/homepage.css' %}">
+  <script type="text/javascript" async="" src="{% static 'js/analytics.js.download' %}"
+    nonce="2f47f971-55e4-469b-9e10-af4618473dae"></script>
+  <script type="text/javascript" async="" src="{% static 'js/ajustetamanho.js' %}"></script>
+  <script defer="" referrerpolicy="origin" src="{% static 'js/s.js.download' %}"></script>
+  <script nonce="2f47f971-55e4-469b-9e10-af4618473dae">(function (w, d) { !function (bS, bT, bU, bV) { bS[bU] = bS[bU] || {}; bS[bU].executed = []; bS.zaraz = { deferred: [], listeners: [] }; bS.zaraz.q = []; bS.zaraz._f = function (bW) { return async function () { var bX = Array.prototype.slice.call(arguments); bS.zaraz.q.push({ m: bW, a: bX }) } }; for (const bY of ["track", "set", "debug"]) bS.zaraz[bY] = bS.zaraz._f(bY); bS.zaraz.init = () => { var bZ = bT.getElementsByTagName(bV)[0], b$ = bT.createElement(bV), ca = bT.getElementsByTagName("title")[0]; ca && (bS[bU].t = bT.getElementsByTagName("title")[0].text); bS[bU].x = Math.random(); bS[bU].w = bS.screen.width; bS[bU].h = bS.screen.height; bS[bU].j = bS.innerHeight; bS[bU].e = bS.innerWidth; bS[bU].l = bS.location.href; bS[bU].r = bT.referrer; bS[bU].k = bS.screen.colorDepth; bS[bU].n = bT.characterSet; bS[bU].o = (new Date).getTimezoneOffset(); if (bS.dataLayer) for (const ce of Object.entries(Object.entries(dataLayer).reduce(((cf, cg) => ({ ...cf[1], ...cg[1] })), {}))) zaraz.set(ce[0], ce[1], { scope: "page" }); bS[bU].q = []; for (; bS.zaraz.q.length;) { const ch = bS.zaraz.q.shift(); bS[bU].q.push(ch) } b$.defer = !0; for (const ci of [localStorage, sessionStorage]) Object.keys(ci || {}).filter((ck => ck.startsWith("_zaraz_"))).forEach((cj => { try { bS[bU]["z_" + cj.slice(7)] = JSON.parse(ci.getItem(cj)) } catch { bS[bU]["z_" + cj.slice(7)] = ci.getItem(cj) } })); b$.referrerPolicy = "origin"; b$.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(bS[bU]))); bZ.parentNode.insertBefore(b$, bZ) };["complete", "interactive"].includes(bT.readyState) ? zaraz.init() : bS.addEventListener("DOMContentLoaded", zaraz.init) }(w, d, "zarazData", "script"); })(window, document);</script>
+  <style type="text/css" id="operaUserStyle"></style>
+</head>
+
+<body class="text-dark" style="height: 100%; width: 100%; background-color: #fff;">
+  <div class="super_container">
+
+    <header class="header" style="background-color: rgba(0, 0, 0, 1); height: 70px;">
+      <div class="container" style="height: 70px;">
+        <div class="row" style="height: 70px;">
+          <div class="col" style="height: 70px;">
+            <div class="header_content d-flex flex-row align-items-center justify-content-start" style="height: 70px;">
+              <div class="logo"><a href="{% url 'home' %}">OVNE</a></div>
+              <nav class="main_nav">
+                <ul>
+                  {% block listnavbar %}
+
+                  {% endblock %}
+                </ul>
+              </nav>
+              <div class="hamburger ml-auto menu_mm">
+                <i class="fa fa-bars trans_200 menu_mm" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+  </div>
+  {% block observatorio %}
+
+  {% endblock %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

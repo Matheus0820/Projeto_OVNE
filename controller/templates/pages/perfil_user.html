@@ -1,0 +1,144 @@
+{% extends 'base-controller.html' %}
+
+{% block pagetitle %}
+Editar imagem da materia
+{% endblock %}
+
+{% block controller %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success text-center" role="alert">
+                <strong> <i class="bi bi-check-circle"></i> </strong> {{ message }}
+            </div>
+        {% else %}
+            <div class="alert alert-danger text-center" role="alert">
+                <strong> <i class="bi bi-clipboard-x"></i> </strong> {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+<div class=" text-center">
+    <div class="card text-start" style="margin: 1rem;">
+        <div class="card-header text-white bg-dark d-flex justify-content-between text-center">
+            <div class="p-2 bd-highlight" style="width: 8rem;">
+                <a href="{% url 'controller' %}" class="btn btn-sm btn-danger"><i
+                        class="bi bi-arrow-left-circle"></i></a>
+            </div>
+            <div class="p-2 bd-highlight" style="width: 10rem;">Perfil</div>
+            <div class="p-2 bd-highlight" style="width: 8rem;"></div>
+        </div>
+        <div class="card-body">
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab"
+                        data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                        aria-selected="false">Perfil</button>
+                    <button class="nav-link" id="nav-editar-tab" data-bs-toggle="tab" data-bs-target="#nav-editar"
+                        type="button" role="tab" aria-controls="nav-editar" aria-selected="true">Editar perfil</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
+                    aria-labelledby="nav-profile-tab">
+
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex justify-content-center">
+                                <div class="text-center" style="margin: 1rem;">
+                                    <i class="bi bi-person rounded" style="font-size: 10rem;"></i>
+                                    <p><strong>{{usuario.first_name}}</strong></p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Minhas informações</h5>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6>Nome</h6>
+                                                <p>{{usuario.first_name}}</p>
+                                            </div>
+                                            <div class="col">
+                                                <h6>Usuário</h6>
+                                                <p>{{usuario.username}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6>Email</h6>
+                                                <p>{{usuario.email}}</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <div class="row">
+                                            <div class="col">
+                                                <h6>Último login</h6>
+                                                <p>{{usuario.last_login | date:'d/m/Y - H:i' }}</p>
+                                            </div>
+                                            <div class="col">
+                                                <h6>Data e hora de criação</h6>
+                                                <p>{{usuario.date_joined | date:'d/m/Y - H:i' }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <h5></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="nav-editar" role="tabpanel" aria-labelledby="nav-editar-tab">
+
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex justify-content-center">
+                                <div class="text-center" style="margin: 1rem;">
+                                    <i class="bi bi-person rounded" style="font-size: 10rem;"></i>
+                                    <p><strong>{{usuario.first_name}}</strong></p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">Editar perfil</h5>
+                                    <form action="{% url 'profile' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h6>Nome</h6>
+                                                    <p>{{form.first_name}}</p>
+                                                </div>
+                                                <div class="col">
+                                                    <h6>Email</h6>
+                                                    <p>{{form.email}}</p>
+                                                </div>
+                                            </div>
+                                            <a href="{% url 'alterar_senha' %}" class="btn btn-sm btn-dark"><i class="bi bi-person-fill-lock"></i> Alterar senha</a>
+                                        </div>
+                                        <button type="submit" class="btn btn-sm btn-dark"><i class="bi bi-floppy"></i> Salvar alterações</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
