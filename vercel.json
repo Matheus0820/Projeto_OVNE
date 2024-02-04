@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "ovne/wsgi.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "ovne/wsgi.py"
+      }
+    ]
+  }
