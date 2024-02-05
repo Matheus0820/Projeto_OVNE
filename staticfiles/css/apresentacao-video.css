@@ -1,0 +1,93 @@
+.card-video {
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
+
+.capa-video {
+    max-width: 200px;
+    max-height: 150px;
+}
+
+.capa-video-play {
+    max-width: 100px;
+    max-height: 75px;
+}
+
+.div-texto-video {
+    margin-left: 20px;
+}
+
+.div-conteiner-video {
+    display: flex;
+    margin-left: 10px;
+    padding: 0px;
+    align-items: center;
+    height: 75px;
+}
+
+.div-conteiner-video {
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
+
+.div-conteiner-videos-play {
+    display: flex;
+    margin-left: 10px;
+    padding: 0px;
+    align-items: center;
+    height: 75px;
+}
+
+/* .div-conteiner-video {
+    display: flex;
+    margin-left: 10px;
+    padding: 0px;
+    align-items: center;
+    height: 75px;
+} */
+
+.div-conteiner-video-play {
+    display: flex;
+    align-items: top;
+}
+
+.div-center-video {
+    display: inline-block;
+    min-width: 500px;
+    min-height: 280px;
+    width: 60%;
+    color: black;
+    /* display: flex;
+    align-items: left;
+    justify-content: left; */
+}
+
+.div-center-videos {
+    position: relative;
+    display: inline-block;
+    width: 40%;
+    color: black;
+
+}
+
+.card-video {
+    height: 100%;
+}
+
+.cerd-container-materia {
+    display: flex;
+    margin-left: 10px;
+    padding: 0px;
+    align-items: center;
+    height: 75px;
+}
+
+.div-texto-materia {
+    margin-left: 10px;
+}
+
+.card-texto {
+    margin-bottom: 0px;
+}

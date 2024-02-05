@@ -1,0 +1,157 @@
+.degrader_homepage {
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.3) 100%),
+        url('https://s2-g1.glbimg.com/zjWvc9KBal_lTCqHzm9xwWmCzvo=/0x0:2048x1365/1008x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/g/x/BuTa02QZy31Qe8loIH9g/inspiration4spacexphotos-high-11-.jpg');
+    max-height: 450px;
+}
+.conteudo {
+    padding-bottom: 2.5rem;
+}
+.homepage-rodape {
+    background: linear-gradient(to bottom, 
+        rgba(0,0,0,0.9) 0%,
+        rgba(0,0,0, 1) 100%
+    );
+    width: 100%;
+    height: 10%;
+    max-height: 75px;
+    position: fixed;
+    bottom: 0px;
+    color: white;
+}
+
+.rodape-direitos-autorais {
+    width: 100%;
+    text-align: center; 
+    position: fixed; 
+    bottom: 0%;
+    color: rgba(255, 255, 255, 0.7)
+}
+
+.div-apoiadores {
+    display: inline-block;
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    margin: 2px;
+}
+
+.div-apoiadores img {
+    max-width: 50px;
+    max-height: 50px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+.div-rodape-central {
+    width: 100%;
+    height: 100%;
+}
+
+.div-redes {
+    display: inline-block;
+    margin: 2px;
+}
+
+.div-redes img {
+    display: inline-block;
+    max-width: 20px;
+    margin: 5px;
+}
+
+.div-rodape-central hr {
+    width: 2px;
+    height: 20px;
+    background-color: white;
+    border-color: white;
+    right: 0px;
+    display: inline-block;
+}
+
+.botton-body {
+    border-radius: 50px;
+}
+
+
+/* .rodape {
+    background: linear-gradient(to bottom,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 1) 100%);
+    color: white;
+    width: 100%;
+    bottom: 0px;
+    font-size: 5px;
+    font-family: helvetica;
+
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.rodape a {
+    text-decoration: none;
+    color: white;
+}
+
+.rodape p {
+    color: white;
+    margin-bottom: 5px;
+}
+
+.rodape-div {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
+    align-items: stretch;
+}
+
+.rodape-div-1,
+.rodape-div-2,
+.rodape-div-3,
+.rodape-div-4 {
+    display: flex;
+    width: calc(100% / 4 - 20px);
+    padding: 10px;
+}
+
+.rodape-div-1 img {
+    max-width: 50px;
+    max-height: 50px;
+    width: 100%;
+    height: auto;
+}
+
+.rodape span {
+    font-size: 10px;
+    color: white;
+}
+
+.rodape-direitos {
+    width: calc(100% - 20px);
+    bottom: 0px;
+    background-color: transparent;
+    padding: 10px;
+    margin: 0px;
+    text-align: center;
+}
+
+
+@media (max-width: 768px) {
+
+    .rodape-div-1,
+    .rodape-div-2,
+    .rodape-div-3,
+    .rodape-div-4 {
+        width: calc(50% - 20px);
+        padding: 10px;
+    }
+
+    .rodape-div {
+        padding: 10px 0px 20px 0px;
+    }
+
+
+} */
