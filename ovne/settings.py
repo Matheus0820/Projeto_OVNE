@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!l9!v_t^390nnz6r0q^m-uq^x+l2w+=e_9sc-nnmik-59(w*5$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -123,6 +123,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
+# STATIC_ROOT = '/opt/render/project/src/staticfiles/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'observatorio/static'),
     os.path.join(BASE_DIR, 'controller/static'),
