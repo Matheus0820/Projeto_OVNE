@@ -76,13 +76,14 @@ WSGI_APPLICATION = 'ovne.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = { # PostgreSQL
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'OVNE_database',
-        'USER': 'postgres',
-        'PASSWORD': '369963',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ovne_database',
+        'USER': 'admin',
+        'PASSWORD': 'xEmviVhVL06j2nSFFASQNXZWbBJcBfTV',
+        'HOST': 'dpg-cn02fsicn0vc73arnb9g-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
 }
 
