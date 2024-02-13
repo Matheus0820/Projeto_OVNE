@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!l9!v_t^390nnz6r0q^m-uq^x+l2w+=e_9sc-nnmik-59(w*5$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -78,12 +78,11 @@ WSGI_APPLICATION = 'ovne.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ovne_database',
-        'USER': 'admin',
-        'PASSWORD': 'xEmviVhVL06j2nSFFASQNXZWbBJcBfTV',
-        'HOST': 'dpg-cn02fsicn0vc73arnb9g-a.oregon-postgres.render.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'OVNE_database',
+        'USER': 'postgres',
+        'PASSWORD': '369963',
+        'HOST': 'localhost',
     }
 }
 
@@ -122,11 +121,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'observatorio/static'),
     os.path.join(BASE_DIR, 'controller/static'),
-    os.path.join(BASE_DIR, 'observatorio/static')
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
