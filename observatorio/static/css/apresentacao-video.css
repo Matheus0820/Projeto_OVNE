@@ -15,6 +15,7 @@
 }
 
 .div-texto-video {
+    width: fit-content;
     margin-left: 20px;
 }
 
@@ -49,12 +50,12 @@
 } */
 
 .div-conteiner-video-play {
-    display: flex;
+    /* display: flex; */
     align-items: top;
 }
 
 .div-center-video {
-    display: inline-block;
+    /* display: inline-block; */
     min-width: 500px;
     min-height: 280px;
     width: 60%;
@@ -66,7 +67,7 @@
 
 .div-center-videos {
     position: relative;
-    display: inline-block;
+    /* display: inline-block; */
     width: 40%;
     color: black;
 

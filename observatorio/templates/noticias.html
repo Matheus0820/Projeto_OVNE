@@ -1,10 +1,4 @@
 {% extends 'base-observatorio.html' %}
-{% block listnavbar %}
-<li><a href="{% url 'home' %}">Home</a></li>
-<li><a href="{% url 'videos' %}">Videos</a></li>
-<li class="active"><a href="{% url 'noticias' %}">Noticias</a></li>
-<li><a href="{% url 'sobre' %}">About us</a></li>
-{% endblock %}
 
 {% block observatorio %}
 <div class="" style="margin-top: 75px;">
@@ -76,11 +70,11 @@
                 alt="{{materia.titulo}}"></a>
             <div class="div-texto-materia">
               <a href="{% url 'view_noticia' materia.id %}">
-                <h4 class="card-title text-dark">{{materia.titulo}}</h4>
+                <h4 class="card-title text-dark text_responsive">{{materia.titulo}}</h4>
               </a>
               <p class="card-texto text-dark"> Autor: {{materia.autor}}</p>
               <p class="card-text"><small class="text-muted text-dark">Publicado em:
-                  {{materia.publicacao|date:"d/m/Y"}}</small> - {{materia.resumo}} </p>
+                  {{materia.publicacao|date:"d/m/Y"}}</small> - {{materia.resumo | slice:"0:80" }}... </p>
             </div>
           </div>
         </div>

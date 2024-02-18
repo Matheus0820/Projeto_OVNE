@@ -1,10 +1,4 @@
 {% extends 'base-observatorio.html' %}
-{% block listnavbar %}
-<li><a href="{% url 'home' %}">Home</a></li>
-<li><a href="{% url 'videos' %}">Videos</a></li>
-<li><a href="{% url 'noticias' %}">Noticias</a></li>
-<li><a href="{% url 'sobre' %}">About us</a></li>
-{% endblock %}
 
 {% block observatorio %}
 <div class="" style="margin-top: 75px; height: 100vh;">
@@ -23,10 +17,11 @@
         </div>
 
       </div>
-      <div
+      <div class="linha-lateral"
         style="height: 90%; width: 3px; display: inline-block; background-color: black; top: 0px; margin-left: 10px;">
       </div>
       <!-- <hr style="height: 410px; width: 3px; display: inline-block; background-color: black; top: 0px; margin-left: 10px;"> -->
+      <br>
       <div class="div-center-videos">
         <div class="card text-start" style="margin: 0px;">
           {% if videos %}
@@ -36,7 +31,7 @@
                 alt="{{video.titulo}}"></a>
             <div class="div-texto-video">
               <a href="{% url 'play_video' video.id %}">
-                <h6 class="card-title text-dark">{{video.titulo}}</h6>
+                <p class="card-title text-dark">{{video.titulo}}</p>
               </a>
               <p class="card-text"><small class="text-muted text-dark">Publicado em: {{video.publicacao}}</small></p>
             </div>
